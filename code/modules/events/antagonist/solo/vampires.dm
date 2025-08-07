@@ -10,7 +10,7 @@
 	shared_occurence_type = SHARED_HIGH_THREAT
 
 	weight = 10 // frag out boy
-	max_occurrences = 2
+	max_occurrences = 0 // wait this is vlord lmao
 	denominator = 50
 
 	base_antags = 1
