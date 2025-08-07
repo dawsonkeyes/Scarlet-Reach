@@ -46,7 +46,7 @@
 
 	base_antags = 1
 	maximum_antags = 5
-	max_occurences = 1 // fuck you
+	max_occurrences = 1 // fuck you
 	earliest_start = 0 SECONDS
 
 	weight = 10
