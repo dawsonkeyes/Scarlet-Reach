@@ -1064,10 +1064,6 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	icon_state = "arrow"
 	delete_after_roundstart = FALSE
 
-/obj/effect/landmark/start/vampirespawn/Initialize()
-	. = ..()
-	GLOB.vlordspawn_starts += loc
-
 /obj/effect/landmark/start/vampireknight
 	name = "Death Knight"
 	icon_state = "arrow"
