@@ -9,9 +9,8 @@
 	antag_flag = ROLE_NBEAST
 	shared_occurence_type = SHARED_HIGH_THREAT
 
-	weight = 0		//Disabled cus vampires too strong
-	max_occurrences = 0
-
+	weight = 10 // frag out boy
+	max_occurrences = 2
 	denominator = 80
 
 	base_antags = 1
