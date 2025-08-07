@@ -10,7 +10,7 @@
 	shared_occurence_type = SHARED_HIGH_THREAT
 
 	weight = 10 // frag out boy
-	max_occurrences = 0 // wait this is vlord lmao
+	max_occurrences = 2
 	denominator = 50
 
 	base_antags = 1
@@ -19,7 +19,7 @@
 	earliest_start = 0 SECONDS
 
 	typepath = /datum/round_event/antagonist/solo/vampire
-	antag_datum = /datum/antagonist/vampirelord
+	antag_datum = /datum/antagonist/vampirelord/lesser
 
 	restricted_roles = list(
 		"Grand Duke",
