@@ -8,7 +8,7 @@
 	roundstart = TRUE
 	antag_flag = ROLE_NBEAST
 	shared_occurence_type = SHARED_HIGH_THREAT
-	denominator = 80
+	denominator = 40 // this is the lower chance higher threat version
 
 	base_antags = 2
 	maximum_antags = 4
