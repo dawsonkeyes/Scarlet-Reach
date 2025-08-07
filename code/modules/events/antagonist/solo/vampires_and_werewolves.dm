@@ -15,8 +15,8 @@
 
 	earliest_start = 0 SECONDS
 
-	weight = 0		//Disabled cus vampires too strong.
-	max_occurrences = 0
+	weight = 6 // less likely because this is total chaos
+	max_occurrences = 1
 
 	typepath = /datum/round_event/antagonist/solo/vampires_and_werewolves
 
