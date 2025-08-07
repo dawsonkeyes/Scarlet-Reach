@@ -11,7 +11,7 @@
 
 	weight = 10 // frag out boy
 	max_occurrences = 2
-	denominator = 80
+	denominator = 50
 
 	base_antags = 1
 	maximum_antags = 2
