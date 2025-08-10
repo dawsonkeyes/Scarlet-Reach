@@ -15,7 +15,7 @@
 	maximum_antags = 2
 
 	weight = 7	//i love you
-	max_occurrences = 1 // mashallah
+	max_occurrences = 0 // temp disabled by headmaint request
 
 	earliest_start = 0 SECONDS
 
