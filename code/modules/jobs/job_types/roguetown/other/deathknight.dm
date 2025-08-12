@@ -90,15 +90,17 @@
 	H.adjust_skillrank(/datum/skill/magic/arcane, 3, TRUE)
 	H?.mind.adjust_spellpoints(18)
 
-
+	wrists = /obj/item/clothing/wrists/roguetown/bracers
+	neck = /obj/item/clothing/neck/roguetown/bevor
 	belt = /obj/item/storage/belt/rogue/leather
 	pants = /obj/item/clothing/under/roguetown/platelegs/zizo
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/zizo
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/black
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/full/zizo // unremovable darksteel; as opposed to giving them lootable blacksteel
 	gloves = /obj/item/clothing/gloves/roguetown/plate/zizo
-	backl = /obj/item/rogueweapon/sword/long/zizo
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/zizo
+	belt = /obj/item/storage/belt/rogue/leather/black
+	backl = /obj/item/rogueweapon/sword/long/zizo
 
 	H.change_stat("intelligence", 3)
 	H.change_stat("strength", 2)
