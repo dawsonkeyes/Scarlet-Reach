@@ -165,6 +165,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	cloak = /obj/item/clothing/cloak/cape/puritan
 	shoes = /obj/item/clothing/shoes/roguetown/boots
 	backl = /obj/item/storage/backpack/rogue/satchel/black
+	backr = /obj/item/rogueweapon/sword/long/vlord // this shit should NOT be on the map otherwise
 	H.ambushable = FALSE
 
 ////////Outfits////////
