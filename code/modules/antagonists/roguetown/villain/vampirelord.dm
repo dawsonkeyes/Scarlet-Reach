@@ -11,7 +11,9 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	roundend_category = "Vampires"
 	antagpanel_category = "Vampire"
 	job_rank = ROLE_VAMPIRE
-	var/list/inherent_traits = list(TRAIT_STRONGBITE, TRAIT_NOBLE, TRAIT_NOHUNGER, TRAIT_NOBREATH, TRAIT_NOPAIN, TRAIT_TOXIMMUNE, TRAIT_STEELHEARTED, TRAIT_NOSLEEP, TRAIT_VAMPMANSION, TRAIT_VAMP_DREAMS, TRAIT_INFINITE_STAMINA, TRAIT_HEAVYARMOR, TRAIT_COUNTERCOUNTERSPELL, TRAIT_STRENGTH_UNCAPPED)
+	var/list/inherent_traits = list(TRAIT_STRONGBITE, TRAIT_NOBLE, TRAIT_NOHUNGER, TRAIT_NOBREATH, TRAIT_NOPAIN, TRAIT_TOXIMMUNE, TRAIT_STEELHEARTED, TRAIT_NOSLEEP, TRAIT_VAMPMANSION, TRAIT_VAMP_DREAMS, TRAIT_INFINITE_STAMINA, TRAIT_HEAVYARMOR, TRAIT_COUNTERCOUNTERSPELL, TRAIT_STRENGTH_UNCAPPED, TRAIT_CRITICAL_WEAKNESS)
+	antag_hud_type = ANTAG_HUD_VAMPIRE
+	antag_hud_name = "Vlord"
 	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "vampire lord"
 	confess_lines = list(
@@ -60,13 +62,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	owner.special_role = name
 	for(var/inherited_trait in inherent_traits)
 		ADD_TRAIT(owner.current, inherited_trait, "[type]")
-	owner.current.cmode_music = 'sound/music/combat_vamp.ogg'
-	var/obj/item/organ/eyes/eyes = owner.current.getorganslot(ORGAN_SLOT_EYES)
-	if(eyes)
-		eyes.Remove(owner.current,1)
-		QDEL_NULL(eyes)
-	eyes = new /obj/item/organ/eyes/night_vision/zombie
-	eyes.Insert(owner.current)
+	owner.current.cmode_music = 'sound/music/combat_vamp2.ogg'
 	owner.current.AddSpell(new /obj/effect/proc_holder/spell/targeted/transfix)
 	owner.current.verbs |= /mob/living/carbon/human/proc/vamp_regenerate
 	owner.current.verbs |= /mob/living/carbon/human/proc/vampire_telepathy
@@ -80,7 +76,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 			mypool = mansion
 		equip_spawn()
 		greet()
-		addtimer(CALLBACK(owner.current, TYPE_PROC_REF(/mob/living/carbon/human, spawn_pick_class), "VAMPIRE SPAWN"), 5 SECONDS)
+		addtimer(CALLBACK(owner.current, TYPE_PROC_REF(/mob/living/carbon/human, equipOutfit), /datum/outfit/job/roguetown/vampthrall), 5 SECONDS)
 	else
 		forge_vampirelord_objectives()
 		finalize_vampire()
@@ -106,12 +102,6 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 		owner.person_knows_me(MF)
 
 	var/mob/living/carbon/human/H = owner.current
-	var/obj/item/organ/eyes/eyes = owner.current.getorganslot(ORGAN_SLOT_EYES)
-	if(eyes)
-		eyes.Remove(owner.current,1)
-		QDEL_NULL(eyes)
-	eyes = new /obj/item/organ/eyes/night_vision/zombie
-	eyes.Insert(owner.current)
 	H.equipOutfit(/datum/outfit/job/roguetown/vamplord)
 	H.set_patron(/datum/patron/inhumen/zizo)
 
@@ -130,21 +120,6 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 
 	owner.current.adjust_skillrank(/datum/skill/magic/blood, 2, TRUE)
 	owner.current.ambushable = FALSE
-
-/mob/living/carbon/human/proc/spawn_pick_class()
-	var/list/classoptions = list("Ranger","Blacksmith","Carpenter","Seamstress","Rogue","Mage","Hunter","Trader")
-	var/list/visoptions = list()
-
-	for(var/T in 1 to 5)
-		if(length(classoptions))
-			visoptions += pick_n_take(classoptions)
-
-	var/selected = input(src, "Which class was I?", "VAMPIRE SPAWN") as anything in visoptions
-
-	for(var/datum/advclass/A in SSrole_class_handler.sorted_class_categories[CTAG_ALLCLASS])
-		if(A.name == selected)
-			equipOutfit(A.outfit)
-			return
 
 /datum/outfit/job/roguetown/vamplord/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -166,6 +141,23 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	shoes = /obj/item/clothing/shoes/roguetown/boots
 	backl = /obj/item/storage/backpack/rogue/satchel/black
 	backr = /obj/item/rogueweapon/sword/long/vlord // this shit should NOT be on the map otherwise
+	H.ambushable = FALSE
+
+/datum/outfit/job/roguetown/vampthrall/pre_equip(mob/living/carbon/human/H) // you're old but you ain't that old
+	H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/maces, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/axes, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/shields, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/wrestling, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/unarmed, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/bows, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/crossbows, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/whipsflails, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
 	H.ambushable = FALSE
 
 ////////Outfits////////
@@ -326,11 +318,22 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	V.skin_tone = "c9d3de"
 	V.hair_color = "181a1d"
 	V.facial_hair_color = "181a1d"
-	V.eye_color = "ff0000"
+	var/obj/item/organ/eyes/eyes = V.getorganslot(ORGAN_SLOT_EYES)
+	if(eyes)
+		cache_eyes = V.dna?.species.organs[ORGAN_SLOT_EYES]
+		cache_eye_color = eyes.eye_color
+		eyes.Remove(V)
+		QDEL_NULL(eyes)
+	eyes = new /obj/item/organ/eyes/night_vision/zombie
+	eyes.Insert(V)
+	set_eye_color(V, "#ff0000", "#ff0000")
+	eyes.update_accessory_colors()
 	V.update_body()
 	V.update_hair()
 	V.update_body_parts(redraw = TRUE)
 	V.mob_biotypes = MOB_UNDEAD
+	V.vampire_disguise()
+	V.vampire_undisguise()
 	if(isspawn)
 		V.vampire_disguise()
 
@@ -469,7 +472,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 /datum/antagonist/vampirelord/lesser
 	name = "Vampire Spawn"
 	antag_hud_name = "Vspawn"
-	inherent_traits = list(TRAIT_STRONGBITE, TRAIT_NOHUNGER, TRAIT_NOBREATH, TRAIT_NOPAIN, TRAIT_TOXIMMUNE, TRAIT_STEELHEARTED, TRAIT_NOSLEEP, TRAIT_VAMPMANSION, TRAIT_VAMP_DREAMS, TRAIT_INFINITE_ENERGY)
+	inherent_traits = list(TRAIT_STRONGBITE, TRAIT_NOHUNGER, TRAIT_NOBREATH, TRAIT_NOPAIN, TRAIT_TOXIMMUNE, TRAIT_STEELHEARTED, TRAIT_NOSLEEP, TRAIT_VAMPMANSION, TRAIT_VAMP_DREAMS, TRAIT_INFINITE_ENERGY, TRAIT_CRITICAL_WEAKNESS)
 	confess_lines = list(
 		"THE CRIMSON CALLS!",
 		"MY MASTER COMMANDS",
@@ -641,13 +644,14 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 					user.playsound_local(get_turf(src), 'sound/misc/vcraft.ogg', 100, FALSE, pressure_affected = FALSE)
 		if("Shape Armor")
 			if(alert(user, "Craft a new set of armor? Cost:5000","","Yes","No") == "Yes")
-				if(!check_withdraw(-5000))
+				if(!check_withdraw(-7500)) // strongest armor in the game, it's gonna cost you a fucking lot
 					to_chat(user, "I don't have enough vitae!")
 					return
 				if(do_after(user, 100))
-					lord.handle_vitae(-5000)
+					lord.handle_vitae(-7500)
 					new /obj/item/clothing/under/roguetown/platelegs/vampire(user.loc)
 					new /obj/item/clothing/neck/roguetown/bevor(user.loc)
+					new /obj/item/clothing/wrists/roguetown/bracers(user.loc)
 					new /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk(user.loc)
 					new /obj/item/clothing/suit/roguetown/armor/plate/vampire(user.loc)
 					new /obj/item/clothing/shoes/roguetown/boots/armor/vampire(user.loc)
@@ -814,15 +818,30 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 
 /mob/proc/death_knight_spawn()
 	SEND_SOUND(src, sound('sound/misc/notice (2).ogg'))
-	if(alert(src, "A Vampire Lord is summoning you from the Underworld.", "Be Risen?", "Yes", "No") == "Yes")
-		if(!has_world_trait(/datum/world_trait/death_knight))
-			to_chat(src, span_warning("Another soul was chosen."))
-		returntolobby()
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a Death Knight?", ROLE_VAMPIRE, null, null, 10 SECONDS, src, POLL_IGNORE_NECROMANCER_SKELETON)
+	if(LAZYLEN(candidates))
+		var/mob/dead/observer/C = pick(candidates)
+		log_game("VAMPIRE LOG: [C.ckey] chosen as new death knight.")
+		var/mob/living/carbon/human/new_knight = new /mob/living/carbon/human/species/human/northern()
+		new_knight.forceMove(usr.loc)
+		new_knight.ckey = C.key
+		new_knight.equipOutfit(/datum/job/roguetown/deathknight)
+		new_knight.regenerate_icons()
 
 // DEATH KNIGHT ANTAG
 /datum/antagonist/skeleton/knight
 	name = "Death Knight"
 	increase_votepwr = FALSE
+	antag_hud_name = "Vspawn"
+	antag_hud_type = ANTAG_HUD_VAMPIRE
+
+/datum/antagonist/skeleton/knight/apply_innate_effects(mob/living/mob_override)
+	var/mob/living/M = mob_override || owner.current
+	add_antag_hud(antag_hud_type, antag_hud_name, M)
+
+/datum/antagonist/skeleton/knight/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/M = mob_override || owner.current
+	remove_antag_hud(antag_hud_type, M)
 
 /datum/antagonist/skeleton/knight/on_gain()
 	. = ..()
