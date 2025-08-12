@@ -51,7 +51,7 @@
 			return FALSE
 		if(new_owner.current && HAS_TRAIT(new_owner.current, TRAIT_MINDSHIELD))
 			return FALSE
-	return TRUE
+		return TRUE
 
 /datum/antagonist/prebel/on_gain()
 	. = ..()
