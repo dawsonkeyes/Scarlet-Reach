@@ -1,8 +1,8 @@
 /// DEFINITIONS ///
 #define VAMP_LEVEL_ONE 10000
-#define VAMP_LEVEL_TWO 12000
-#define VAMP_LEVEL_THREE 15000
-#define VAMP_LEVEL_FOUR 20000
+#define VAMP_LEVEL_TWO 15000
+#define VAMP_LEVEL_THREE 25000
+#define VAMP_LEVEL_FOUR 40000
 
 GLOBAL_LIST_EMPTY(vampire_objects)
 
@@ -765,6 +765,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 						to_chat(user, "I don't have enough vitae!")
 						return
 					if(do_after(user, 100))
+						lord.handle_vitae(-5000)
 						to_chat(user, "I have summoned a knight from the underworld. I need only wait for them to materialize.")
 						SSmapping.add_world_trait(/datum/world_trait/death_knight, -1)
 						for(var/mob/dead/observer/D in GLOB.player_list)
@@ -779,11 +780,12 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 				if(GLOB.tod == "night")
 					to_chat(user, "It's already night!")
 					return
-				if(alert(user, "Force Enigma into Night? Cost:5000","","Yes","No") == "Yes")
-					if(!lord.mypool.check_withdraw(-2500))
+				if(alert(user, "Force Enigma into Night? Cost:10000","","Yes","No") == "Yes")
+					if(!lord.mypool.check_withdraw(-10000))
 						to_chat(user, "I don't have enough vitae!")
 						return
 					if(do_after(user, 100))
+						lord.handle_vitae(-10000)
 						GLOB.todoverride = "night"
 						sunstolen = TRUE
 						settod()
