@@ -15,7 +15,7 @@
 
 	earliest_start = 0 SECONDS
 
-	weight = 6 // less likely because this is total chaos
+	weight = 3 // less likely because this is total chaos
 	max_occurrences = 1
 
 	typepath = /datum/round_event/antagonist/solo/vampires_and_werewolves
