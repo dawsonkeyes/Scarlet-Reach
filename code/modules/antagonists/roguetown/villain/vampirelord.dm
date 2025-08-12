@@ -168,20 +168,6 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	H.ambushable = FALSE
 
 ////////Outfits////////
-/obj/item/clothing/under/roguetown/platelegs/vampire
-	name = "ancient plate greaves"
-	desc = ""
-	gender = PLURAL
-	icon_state = "vpants"
-	item_state = "vpants"
-	sewrepair = FALSE
-	armor = ARMOR_VAMP
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
-	blocksound = PLATEHIT
-	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
-	anvilrepair = /datum/skill/craft/armorsmithing
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-
 /obj/item/clothing/suit/roguetown/shirt/vampire
 	slot_flags = ITEM_SLOT_SHIRT
 	name = "regal silks"
@@ -193,6 +179,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 
 /obj/item/clothing/head/roguetown/vampire
 	name = "crown of darkness"
+	desc = "A crown of iridescent power that radiates terrible evil. Staring at it gives you a sense of unease."
 	icon_state = "vcrown"
 	body_parts_covered = null
 	slot_flags = ITEM_SLOT_HEAD
@@ -200,56 +187,76 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	sellprice = 1000
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
-/obj/item/clothing/suit/roguetown/armor/chainmail/iron/vampire
-	icon_state = "vunder"
-	icon = 'icons/roguetown/clothing/shirts.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
-	name = "ancient chain shirt"
-	desc = ""
-	body_parts_covered = COVERAGE_TORSO
-	armor_class = 2
+/obj/item/clothing/under/roguetown/platelegs/vampire
+	name = "ancient plate chausses"
+	desc = "Carefully-weighted plate armor leggings dextrous enough to move in at any speed whilst strong enough to deflect bolts from crossbows."
+	gender = PLURAL
+	icon_state = "vpants"
+	item_state = "vpants"
+	sewrepair = FALSE
+	armor = ARMOR_VAMP
+	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
+	max_integrity = 500
+	blocksound = PLATEHIT
+	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
+	anvilrepair = /datum/skill/craft/armorsmithing
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/suit/roguetown/armor/plate/vampire
 	slot_flags = ITEM_SLOT_ARMOR
 	name = "ancient ceremonial plate"
-	desc = ""
-	body_parts_covered = COVERAGE_TORSO
+	desc = "A panoply of plate armor adorned with ancient filligree and reinforced with alloying techniques known only to the likes of gods."
+	body_parts_covered = COVERAGE_FULL // this is fullplate duhh
 	icon_state = "vplate"
 	item_state = "vplate"
 	armor = ARMOR_VAMP
+	allowed_race = CLOTHED_RACES_TYPES
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	nodismemsleeves = TRUE
 	max_integrity = 500
 	allowed_sex = list(MALE, FEMALE)
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/steel
-	equip_delay_self = 40
-	armor_class = 3
+	equip_delay_self = 12 SECONDS
+	unequip_delay_self = 12 SECONDS
+	equip_delay_other = 3 SECONDS
+	strip_delay = 6 SECONDS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/shoes/roguetown/boots/armor/vampire
 	name = "ancient ceremonial plated boots"
-	desc = ""
+	desc = "Boots adorned with shimmering decorations and plated in an alloy not even the land's most legendary smiths could hope to replicate."
 	body_parts_covered = FEET
 	icon_state = "vboots"
 	item_state = "vboots"
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
-	color = null
+	max_integrity = 500
 	blocksound = PLATEHIT
 	armor = ARMOR_VAMP
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/head/roguetown/helmet/heavy/vampire
 	name = "ancient ceremonial helm"
+	desc = "A terrible casque with the visage of Kaine upon the visor, plated with impossibly strong metals mortal minds cannot comprehend."
 	icon_state = "vhelmet"
-	max_integrity = 250
+	armor = ARMOR_VAMP
+	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	max_integrity = 500
 	block2add = FOV_BEHIND
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/gloves/roguetown/chain/vampire
 	name = "ancient ceremonial gloves"
+	desc = "Dextrous gloves that combine a chainmail gauntlet with well-woven outer plating to offer supreme hand protection without sacrificing mobility."
 	icon_state = "vgloves"
+	armor = ARMOR_VAMP
+	prevent_crits = list(BCLASS_CHOP, BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
+	blocksound = PLATEHIT
+	max_integrity = 500
+	blade_dulling = DULLING_BASH
+	break_sound = 'sound/foley/breaksound.ogg'
+	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /datum/antagonist/vampirelord/on_removal()
@@ -640,7 +647,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 					lord.handle_vitae(-5000)
 					new /obj/item/clothing/under/roguetown/platelegs/vampire(user.loc)
 					new /obj/item/clothing/neck/roguetown/bevor(user.loc)
-					new /obj/item/clothing/suit/roguetown/armor/chainmail/iron/vampire(user.loc)
+					new /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk(user.loc)
 					new /obj/item/clothing/suit/roguetown/armor/plate/vampire(user.loc)
 					new /obj/item/clothing/shoes/roguetown/boots/armor/vampire(user.loc)
 					new /obj/item/clothing/head/roguetown/helmet/heavy/vampire(user.loc)
