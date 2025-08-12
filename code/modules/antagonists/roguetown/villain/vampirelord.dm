@@ -14,8 +14,6 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	var/list/inherent_traits = list(TRAIT_STRONGBITE, TRAIT_NOBLE, TRAIT_NOHUNGER, TRAIT_NOBREATH, TRAIT_NOPAIN, TRAIT_TOXIMMUNE, TRAIT_STEELHEARTED, TRAIT_NOSLEEP, TRAIT_VAMPMANSION, TRAIT_VAMP_DREAMS, TRAIT_INFINITE_STAMINA, TRAIT_HEAVYARMOR, TRAIT_COUNTERCOUNTERSPELL, TRAIT_STRENGTH_UNCAPPED, TRAIT_CRITICAL_WEAKNESS)
 	antag_hud_type = ANTAG_HUD_VAMPIRE
 	antag_hud_name = "Vlord"
-	antag_hud_type = ANTAG_HUD_TRAITOR
-	antag_hud_name = "vampire lord"
 	confess_lines = list(
 		"I AM ANCIENT",
 		"I AM THE LAND",
@@ -33,7 +31,8 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	var/obj/structure/vampire/bloodpool/mypool
 	var/last_transform
 	var/cache_skin
-	var/cache_eyes
+	var/obj/item/organ/eyes/cache_eyes
+	var/cache_eye_color
 	var/cache_hair
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/batform //attached to the datum itself to avoid cloning memes, and other duplicates
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/gaseousform/gas
@@ -77,6 +76,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 		equip_spawn()
 		greet()
 		addtimer(CALLBACK(owner.current, TYPE_PROC_REF(/mob/living/carbon/human, equipOutfit), /datum/outfit/job/roguetown/vampthrall), 5 SECONDS)
+
 	else
 		forge_vampirelord_objectives()
 		finalize_vampire()
@@ -459,6 +459,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 			owner.current.visible_message("<font color='red'>[owner.current] is enveloped in dark crimson, a horrific sound echoing in the area. They are evolved.</font>","<font color='red'>I AM ANCIENT, I AM THE LAND. EVEN THE SUN BOWS TO ME.</font>")
 			ascended = TRUE
 			SSmapping.retainer.ascended = TRUE
+			ADD_TRAIT(owner, TRAIT_GRABIMMUNE, TRAIT_GENERIC)
 			for(var/datum/mind/thrall in SSmapping.retainer.vampires)
 				if(thrall.special_role == "Vampire Spawn")
 					thrall.current.verbs |= /mob/living/carbon/human/proc/blood_strength
@@ -924,7 +925,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	triumph_count = 5
 
 /datum/objective/vampirelord/infiltrate/one/check_completion()
-	var/list/churchjobs = list("Priest", "Priestess", "Cleric", "Acolyte", "Templar", "Churchling", "Crusader", "Inquisitor", "Martyr")
+	var/list/churchjobs = list("Bishop", "Cleric", "Acolyte", "Templar", "Churchling", "Crusader", "Inquisitor", "Martyr")
 	for(var/datum/mind/V in SSmapping.retainer.vampires)
 		if(V.current.job in churchjobs)
 			return TRUE
