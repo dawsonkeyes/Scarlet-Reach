@@ -10,7 +10,7 @@
 
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
-	tutorial = "You are bygone. Your will belongs to your master. Fulfil and kill.""
+	tutorial = "You are bygone. Your will belongs to your master. Fulfil and kill."
 
 	spells = list(/obj/effect/proc_holder/spell/invoked/projectile/lightningbolt, /obj/effect/proc_holder/spell/invoked/projectile/fetch)
 	outfit = /datum/outfit/job/roguetown/deathknight
