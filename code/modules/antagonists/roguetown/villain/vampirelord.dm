@@ -823,7 +823,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		log_game("VAMPIRE LOG: [C.ckey] chosen as new death knight.")
-		var/mob/living/carbon/human/new_knight = new /mob/living/carbon/human/species/human/northern()
+		var/mob/living/carbon/human/new_knight = new /mob/living/carbon/human/species/skeleton/no_equipment()
 		new_knight.forceMove(usr.loc)
 		new_knight.ckey = C.key
 		new_knight.equipOutfit(/datum/job/roguetown/deathknight)
