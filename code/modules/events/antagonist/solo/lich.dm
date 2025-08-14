@@ -14,8 +14,8 @@
 	base_antags = 1
 	maximum_antags = 2
 
-	weight = 7	//i love you
-	max_occurrences = 0 // temp disabled by headmaint request
+	weight = 3	//i love you
+	max_occurrences = 1
 
 	earliest_start = 0 SECONDS
 
