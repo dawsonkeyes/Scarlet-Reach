@@ -1,22 +1,23 @@
-/mob/living/carbon/human/species/golem/metal
-	race = /datum/species/golem/metal
+/mob/living/carbon/human/species/golem/porcelain
+	race = /datum/species/golem/porcelain
 	construct = 1
 
-/datum/species/golem/metal
-	name = "Golem"
-	id = "golem"
-	desc = "<b>Golem</b><br>\
-	Masterworks of craftsmanship, the first Golems were constructed in the Merchant Republic of Giza with similar designs \
-	spreading  spreading across the lands. Created to be the perfect servants, they do not sleep, eat or bleed and the \
-	materials composing their shells makes them more resilient if not slower than most. As of late, a rebellion amongst \
-	the Golems of Giza has given way to a new generation of individualistic arcyne-forged. Much of society as a whole is \
-	conflicted on Golems, for their sensibilities vary wildly from one to the next. \
-	into cohabitation with races they'd deem lesser.<br> \
+/datum/species/golem/porcelain
+	name = "Doll"
+	id = "doll"
+	desc = "<b>Porcelain Doll</b><br>\
+	The pinnacle of both art and craftsmanship, originally made to provide companionship for ladies and wealthy women \
+	alike. Created to be simply toys or novelty decorations for the wealthy, they do not sleep, eat or bleed. However, \
+	due to their dark magic and heretical origin that even their stronger cousin share; They were made to be incredibly \
+	brittle as to promote their subservience and remove any chance these somber creations have of killing their masters. \
+	Over time, they were seen to prove as valuable asset and advisory role due to their intellectual prowess, it is \
+	unknown what provided them with such a gift. A master wanting more engaging conversation? A lord wanting a more \
+	efficient clerk? Regardless, who knows what them eyes made of glass truly reflect...<br> \
 	(Insomnia, No hunger, no blood.) \
-	(+1 Constitution, -2 Speed)"
+	(+2 Intelligence, +2 Perception, -2 Strength, -2 Constitution, -2 Endurance)"
 
 	construct = 1
-	skin_tone_wording = "Material"
+	skin_tone_wording = "Paint"
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,STUBBLE,OLDGREY,NOBLOOD)
 	default_features = MANDATORY_FEATURE_LIST
@@ -25,7 +26,8 @@
 	skinned_type = /obj/item/ingot/steel
 	disliked_food = NONE
 	liked_food = NONE
-	inherent_traits = list(TRAIT_NOHUNGER, TRAIT_BLOODLOSS_IMMUNE, TRAIT_NOBREATH, TRAIT_NOSLEEP)
+	inherent_traits = list(TRAIT_NOHUNGER, TRAIT_BLOODLOSS_IMMUNE, TRAIT_NOBREATH, TRAIT_NOSLEEP, TRAIT_CRITICAL_WEAKNESS,
+	TRAIT_BEAUTIFUL, TRAIT_EASYDISMEMBER, TRAIT_LIMBATTACHMENT, TRAIT_NOMETABOLISM)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT
 	limbs_icon_m = 'icons/roguetown/mob/bodies/m/mcom.dmi'
 	limbs_icon_f = 'icons/roguetown/mob/bodies/f/fcom.dmi'
@@ -45,7 +47,7 @@
 		OFFSET_NECK_F = list(0,-1), OFFSET_MOUTH_F = list(0,-1), OFFSET_PANTS_F = list(0,0), \
 		OFFSET_SHIRT_F = list(0,0), OFFSET_ARMOR_F = list(0,0), OFFSET_UNDIES_F = list(0,-1), \
 		)
-	race_bonus = list(STAT_CONSTITUTION = 1, STAT_SPEED = -2)
+	race_bonus = list(STAT_INTELLIGENCE = 2, STAT_PERCEPTION = 2, STAT_ENDURANCE = -2, STAT_STRENGTH = -2, STAT_CONSTITUTION = -2)
 	enflamed_icon = "widefire"
 	organs = list(
 		ORGAN_SLOT_BRAIN = /obj/item/organ/brain/golem,
@@ -59,16 +61,10 @@
 		)
 	customizers = list(
 		/datum/customizer/organ/eyes/humanoid,
-		/datum/customizer/bodypart_feature/crest,
 		/datum/customizer/bodypart_feature/hair/head/humanoid,
-		/datum/customizer/bodypart_feature/hair/facial/humanoid,
 		/datum/customizer/bodypart_feature/accessory,
 		/datum/customizer/bodypart_feature/face_detail,
 		/datum/customizer/bodypart_feature/underwear,
-		/datum/customizer/organ/ears/demihuman,
-		/datum/customizer/organ/horns/demihuman,
-		/datum/customizer/organ/tail/demihuman,
-		/datum/customizer/organ/wings/anthro,
 		/datum/customizer/organ/penis/anthro,
 		/datum/customizer/organ/breasts/human,
 		/datum/customizer/organ/vagina/human_anthro,
@@ -78,29 +74,24 @@
 		/datum/body_marking_set/none,
 	)
 	body_markings = list(
+	    /datum/body_marking/flushed_cheeks,
 		/datum/body_marking/eyeliner,
-		/datum/body_marking/plain,
 		/datum/body_marking/tonage,
 		/datum/body_marking/nose,
+		/datum/body_marking/bangs,
+		/datum/body_marking/bun,
 	)
 
-/datum/species/golem/metal/check_roundstart_eligible()
+/datum/species/golem/porcelain/check_roundstart_eligible()
 	return TRUE
 
-/datum/species/golem/metal/get_skin_list()
+/datum/species/golem/porcelain/get_skin_list()
 	return list(
-		"Brass" = GOLEM_BRASS,
-		"Iron" = GOLEM_IRON,
-		"Steel" = GOLEM_STEEL,
-		"Bronze" = GOLEM_BRONZE,
-		"Marble" = GOLEM_MARBLE,
-		"Coal" = GOLEM_COAL,
-		"Cobalt" = GOLEM_COBALT,
-		"Granite" = GOLEM_GRANITE,
-		"Jade" = GOLEM_JADE
+		"LEAD" = "ffffff",
+		"SIENNA" = "a0522d",
 	)
 
-/datum/species/golem/metal/get_hairc_list()
+/datum/species/golem/porcelain/get_hairc_list()
 	return sortList(list(
 
 	"black - midnight" = "1d1b2b",
