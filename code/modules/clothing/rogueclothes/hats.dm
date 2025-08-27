@@ -305,6 +305,7 @@
 	color = null
 	icon_state = "priesthead"
 	item_state = "priesthead"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	dynamic_hair_suffix = ""
 	sewrepair = TRUE
@@ -2070,9 +2071,10 @@
 	icon_state = "elven_barbute_winged"
 	item_state = "elven_barbute_winged"
 
+// Warden Helmets
 /obj/item/clothing/head/roguetown/helmet/bascinet/antler
 	name = "wardens's helmet"
-	desc = "A strange helmet adorned with antlers worn by the warden of the forest."
+	desc = "A beastly snouted armet with the large horns of an elder saiga protruding from it. Residents of Scarlet Reach know not to fear such a sight in the wilds, for they are exclusively associated with the Reaches wardens."
 	icon = 'icons/roguetown/clothing/special/warden.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden64.dmi'
 	bloody_icon = 'icons/effects/blood64.dmi'
@@ -2092,6 +2094,60 @@
 /obj/item/clothing/head/roguetown/helmet/bascinet/antler/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
 
+/obj/item/clothing/head/roguetown/helmet/sallet/warden
+	flags_inv = HIDEFACE|HIDESNOUT
+	body_parts_covered = FULL_HEAD
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	block2add = FOV_BEHIND
+
+/obj/item/clothing/head/roguetown/helmet/sallet/warden/wolf
+	name = "warden's volfskull helm"
+	desc = "The large, intimidating skull of an elusive white volf, plated with steel on its inner side and given padding - paired together with a steel maille mask and worn with a linen shroud. Such trophies are associated with life-long game wardens and their descendants."
+	icon = 'icons/roguetown/clothing/special/warden.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden.dmi'
+	icon_state = "skullmet_volf"
+
+/obj/item/clothing/head/roguetown/helmet/sallet/warden/goat
+	name = "warden's ramskull helm"
+	desc = "The large, intimidating horned skull of an elusive Azurian great ram, plated with steel on its inner side and given padding - paired together with a steel maille mask and worn with a linen shroud. Such trophies are associated with life-long foresters and their descendants."
+	icon = 'icons/roguetown/clothing/special/warden.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden.dmi'
+	icon_state = "skullmet_goat"
+
+/obj/item/clothing/head/roguetown/helmet/sallet/warden/bear
+	name = "warden's bearskull helm"
+	desc = "The large, intimidating skull of a common direbear, plated with steel on its inner side and given padding - paired together with a steel maille mask and worn with a linen shroud. Such trophies are associated with life-long hunters and their descendants."
+	icon = 'icons/roguetown/clothing/special/warden.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden.dmi'
+	icon_state = "skullmet_bear"
+
+/obj/item/clothing/head/roguetown/roguehood/warden
+	name = "warden's hood"
+	desc = "A hunter's leather hood with two linen layers, sewn larger than usual to accommodate a helmet - or an animal's skull."
+	color = null
+	icon_state = "wardenhood"
+	item_state = "wardenhood"
+	icon = 'icons/roguetown/clothing/special/warden.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden.dmi'
+	body_parts_covered = NECK
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
+	dynamic_hair_suffix = ""
+	edelay_type = 1
+	adjustable = CAN_CADJUST
+	toggle_icon_state = TRUE
+	max_integrity = 200
+
+/obj/item/clothing/head/roguetown/roguehood/warden/antler
+	name = "warden's antlered hood"
+	desc = "A hunter's leather hood with two linen layers, sewn larger than usual tooo accommodate a helmet, and fitted with the large horns of an elder saiga."
+	icon_state = "wardenhoodalt"
+	item_state = "wardenhoodalt"
+	icon = 'icons/roguetown/clothing/special/warden.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden64.dmi'
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	bloody_icon = 'icons/effects/blood64.dmi'
+
 //kazengite update
 /obj/item/clothing/head/roguetown/mentorhat
 	name = "worn bamboo hat"
@@ -2105,3 +2161,64 @@
 	sewrepair = TRUE
 	flags_inv = HIDEEARS
 	body_parts_covered = HEAD|HAIR|EARS|NOSE|EYES
+
+/obj/item/clothing/head/roguetown/loudmouth
+	name = "loudmouth's headcover"
+	desc = "Said to be worn by only the loudest and proudest. The mask is adjustable."
+	icon_state = "loudmouth"
+	item_state = "loudmouth"
+	detail_tag = "_detail"
+	flags_inv = HIDEHAIR|HIDEFACIALHAIR|HIDEFACE|HIDESNOUT
+	flags_cover = HEADCOVERSEYES
+	body_parts_covered = HEAD|HAIR|EARS|NECK|MOUTH|NOSE|EYES
+	adjustable = CAN_CADJUST
+	toggle_icon_state = TRUE
+	color = CLOTHING_RED
+	detail_color = CLOTHING_WHITE
+	blocksound = SOFTHIT
+	max_integrity = 100
+	sewrepair = TRUE
+
+/obj/item/clothing/head/roguetown/loudmouth/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+
+/obj/item/clothing/head/roguetown/loudmouth/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/adjustable_clothing, (NECK|HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/foley/equip/cloak (3).ogg', null, (UPD_HEAD|UPD_MASK))	
+
+// new knight captain drip
+
+/obj/item/clothing/head/roguetown/helmet/visored/captain
+	name = "captain's helmet"
+	desc = "An elegant barbute, fitted with the gold trim and polished metal of nobility."
+	adjustable = CAN_CADJUST
+	icon = 'icons/roguetown/clothing/special/captain.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/captain.dmi'
+	icon_state = "capbarbute"
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
+
+/obj/item/clothing/head/roguetown/helmet/visored/captain/ComponentInitialize()
+	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), HIDEHAIR, null, 'sound/items/visor.ogg', null, UPD_HEAD)
+
+// the klappenlonger
+/obj/item/clothing/head/roguetown/helmet/bascinet/klapplong
+	name = "klappenlonger"
+	desc = "A steel bascinet helmet with a straight visor, or \"klappvisier\", which can greatly reduce visibility. This one is ridiculously long, and due to its flawed design, the visor doesnt open."
+	icon = 'icons/roguetown/clothing/special/klappenlonger.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/klappenlonger.dmi'
+	icon_state = "klapplong"
+	item_state = "klapplong"
+	detail_tag = "_detail"
+	emote_environment = 3
+	body_parts_covered = FULL_HEAD
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	block2add = FOV_BEHIND
+	smeltresult = /obj/item/ingot/steel
+	smelt_bar_num = 2
